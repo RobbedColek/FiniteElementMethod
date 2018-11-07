@@ -10,4 +10,3 @@ public:
 	Element();
 	~Element();
 };
-

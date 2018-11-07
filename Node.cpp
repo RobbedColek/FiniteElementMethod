@@ -8,7 +8,7 @@ Node::Node()
 
 }
 
-Node::Node(int xx, int yy, int tt)
+Node::Node(double xx, double yy, double tt)
 {
 	x = xx;
 	y = yy;

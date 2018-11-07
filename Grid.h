@@ -6,7 +6,7 @@
 class Grid
 {
 public:
-	Node * nodeList; //ogarn¹æ
+	Node * nodeList;
 	Element* elementList;
 	int H, L, nH, nL;
 

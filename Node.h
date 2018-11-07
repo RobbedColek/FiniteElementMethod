@@ -3,9 +3,9 @@ class Node
 {
 
 public:
-	int x, y, t;
+	double x, y, t;
 	Node();
-	Node(int, int, int);
+	Node(double, double, double);
 	~Node();
 
 	void printInfo();
