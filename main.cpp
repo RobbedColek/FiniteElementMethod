@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Jacobian.h"
 #include "MatrixH.h"
+#include "MatrixC.h"
 
 int main()
 {
@@ -33,4 +34,8 @@ int main()
 	MatrixH testMatrixH;
 
 	testMatrixH.calculateMatrixH(testJacobian, 30);
+
+	MatrixC testMatrixC;
+
+	testMatrixC.calculateMatrixC(testJacobian, 700, 7800);
 }
