@@ -1,6 +1,6 @@
-#include "stdafx.h"
 #include "Jacobian.h"
 #include <iostream>
+#include <cmath>
 
 Jacobian::Jacobian()
 {

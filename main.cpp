@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Grid.h"
 #include <iostream>
 #include "Jacobian.h"
@@ -34,6 +33,4 @@ int main()
 	MatrixH testMatrixH;
 
 	testMatrixH.calculateMatrixH(testJacobian, 30);
-
-	system("pause");
 }
