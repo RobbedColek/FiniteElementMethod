@@ -21,6 +21,7 @@ public:
 	double k, c, ro, alpha, ambientTemperature, simulationTime, simulationStepTime, initialTemperature;
 	double *vec;
 	double **matrixHAndVectorP;
+	double *vectorP;
 
 	Grid();
 	~Grid();

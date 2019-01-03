@@ -222,8 +222,9 @@ void Grid::aggregateGrid() {
     }
     for (int j = 0; j < nL*nH; j++) {
 
+        vectorP[j] = globalVectorP[j];
         globalVectorP[j] = -globalVectorP[j] + temp[j];
-        // std::cout << globalVectorP[j] << std::endl;
+        std::cout << globalVectorP[j] << std::endl;
         for (int k = 0; k < nL*nH; k++) {
 
             globalMatrixH[j][k] += globalMatrixHBC[j][k]+ (globalMatrixC[j][k]/simulationStepTime);
@@ -474,7 +475,7 @@ void Grid::updateVectorP() {
         for (int i = 0; i < (nL * nH); ++i) {
             val1 += ((globalMatrixC[j][i] / simulationStepTime) * vec[i]);
         }
-        globalVectorP[j] = -globalVectorP[j] + val1;
+        globalVectorP[j] = -vectorP[j] + val1;
         val1 = 0;
     }
 }
