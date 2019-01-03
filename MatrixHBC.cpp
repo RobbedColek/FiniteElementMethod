@@ -158,7 +158,7 @@ void MatrixHBC::CalculateMatrixHBC(Element element) {
                 {
                         matrixH[i][j] = element.isSurfaceHeated[0] * sum1[i][j] + element.isSurfaceHeated[1] * sum2[i][j] + element.isSurfaceHeated[2] * sum3[i][j] + element.isSurfaceHeated[3] * sum4[i][j];
 
-                        std::cout << matrixH[i][j] << std::endl;
+                        // std::cout << matrixH[i][j] << std::endl;
                 }
         }
 

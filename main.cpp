@@ -57,5 +57,6 @@ int main()
 	 testVectorP.CalculateVectorP(testElement);
 	 */
 
-	test.aggregateGrid(25, 700, 7800, 300, 1200);
+	test.aggregateGrid();
+	test.calculateTemperatures();
 }
