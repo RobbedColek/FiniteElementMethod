@@ -46,7 +46,7 @@ void MatrixH::calculateMatrixH(Jacobian jacobian, double k)
 		for (int j = 0; j<4; j++)
 		{
 			H[j][i] = sum[0][j][i] + sum[1][j][i] + sum[2][j][i] + sum[3][j][i];
-			std::cout << H[j][i] << std::endl;
+			// std::cout << H[j][i] << std::endl;
 		}
 	}
 }

@@ -24,7 +24,7 @@ void MatrixC::calculateMatrixC(Jacobian jacobian, double c, double ro)
 
             C[i][j] = tempMatrix[i][j][0] + tempMatrix[i][j][1] + tempMatrix[i][j][2] + tempMatrix[i][j][3];
 
-            std::cout << C[i][j] << std::endl;
+            // std::cout << C[i][j] << std::endl;
         }
     }
 }

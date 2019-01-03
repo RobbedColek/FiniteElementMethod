@@ -6,6 +6,7 @@ class Element
 public:
 	Node nodeID[4];  
 	int ID[4];
+	bool isSurfaceHeated[4];
 
 	Element();
 	~Element();
