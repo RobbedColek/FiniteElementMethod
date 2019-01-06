@@ -8,17 +8,17 @@
 
 #include "Element.h"
 
-class MatrixHBC {
+class MatrixHBC
+{
 public:
-    long double alpha;
-    long double Px[8], Py[8];
-    long double matrixH[4][4];
+	long double alpha;
+	long double Px[8], Py[8];
+	long double matrixH[4][4];
 
-    MatrixHBC();
-    ~MatrixHBC();
+	MatrixHBC();
+	~MatrixHBC();
 
-    void CalculateMatrixHBC(Element element);
-
+	void CalculateMatrixHBC(Element element);
 };
 
 

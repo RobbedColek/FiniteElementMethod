@@ -23,13 +23,13 @@ Jacobian::~Jacobian()
 
 void Jacobian::calculateShapeFunctions()
 {
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		// i to node, 0 1 2 to ktora funkcja
-		N[i][0] = 0.25*(1 - ksi[i])*(1 - eta[i]);
-		N[i][1] = 0.25*(1 + ksi[i])*(1 - eta[i]);
-		N[i][2] = 0.25*(1 + ksi[i])*(1 + eta[i]);
-		N[i][3] = 0.25*(1 - ksi[i])*(1 + eta[i]);
+		N[i][0] = 0.25 * (1 - ksi[i]) * (1 - eta[i]);
+		N[i][1] = 0.25 * (1 + ksi[i]) * (1 - eta[i]);
+		N[i][2] = 0.25 * (1 + ksi[i]) * (1 + eta[i]);
+		N[i][3] = 0.25 * (1 - ksi[i]) * (1 + eta[i]);
 	}
 
 	/*
@@ -41,16 +41,17 @@ void Jacobian::calculateShapeFunctions()
 		std::cout << "N[" << i << "] = " << N[i][3] << std::endl;
 	}
 	*/
-	
 }
 
 void Jacobian::calculateInterpolatedCoordinates(Element element)
 {
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		// 0 x, 1 y, i to ktore xp i yp
-		InterpolatedCoordinates[i][0] = N[i][0] * element.nodeID[0].x + N[i][1] * element.nodeID[1].x + N[i][2] * element.nodeID[2].x + N[i][3] * element.nodeID[3].x;
-		InterpolatedCoordinates[i][1] = N[i][0] * element.nodeID[0].y + N[i][1] * element.nodeID[1].y + N[i][2] * element.nodeID[2].y + N[i][3] * element.nodeID[3].y;
+		InterpolatedCoordinates[i][0] = N[i][0] * element.nodeID[0].x + N[i][1] * element.nodeID[1].x + N[i][2] * element.
+			nodeID[2].x + N[i][3] * element.nodeID[3].x;
+		InterpolatedCoordinates[i][1] = N[i][0] * element.nodeID[0].y + N[i][1] * element.nodeID[1].y + N[i][2] * element.
+			nodeID[2].y + N[i][3] * element.nodeID[3].y;
 	}
 	/*
 	for(int i = 0; i < 4; i++)
@@ -67,15 +68,15 @@ void Jacobian::calculateShapeFunctionsDerivatives()
 	{
 		// i - dla jakiego punktu calkowania
 		// 0, 1, 2, 3 - punkty calkowania
-		dNdksi[0][i] = -0.25*(1 - eta[i]);
-		dNdksi[1][i] = 0.25*(1 - eta[i]);
-		dNdksi[2][i] = 0.25*(1 + eta[i]);
-		dNdksi[3][i] = -0.25*(1 + eta[i]);
+		dNdksi[0][i] = -0.25 * (1 - eta[i]);
+		dNdksi[1][i] = 0.25 * (1 - eta[i]);
+		dNdksi[2][i] = 0.25 * (1 + eta[i]);
+		dNdksi[3][i] = -0.25 * (1 + eta[i]);
 
-		dNdeta[0][i] = -0.25*(1 - ksi[i]);
-		dNdeta[1][i] = -0.25*(1 + ksi[i]);
-		dNdeta[2][i] = 0.25*(1 + ksi[i]);
-		dNdeta[3][i] = 0.25*(1 - ksi[i]);
+		dNdeta[0][i] = -0.25 * (1 - ksi[i]);
+		dNdeta[1][i] = -0.25 * (1 + ksi[i]);
+		dNdeta[2][i] = 0.25 * (1 + ksi[i]);
+		dNdeta[3][i] = 0.25 * (1 - ksi[i]);
 	}
 	/*
 	std::cout << "dN/dksi" << std::endl;
@@ -116,12 +117,16 @@ void Jacobian::calculateJacobian(Element element)
 	// jacobian[i][0-1] - eta
 	// jacobian[i][2-3] - ksi
 
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		jacobian[i][0] = element.nodeID[0].x * dNdksi[0][i] + element.nodeID[1].x * dNdksi[1][i] + element.nodeID[2].x * dNdksi[2][i] + element.nodeID[3].x * dNdksi[3][i];
-		jacobian[i][1] = element.nodeID[0].y * dNdksi[0][i] + element.nodeID[1].y * dNdksi[1][i] + element.nodeID[2].y * dNdksi[2][i] + element.nodeID[3].y * dNdksi[3][i];
-		jacobian[i][2] = element.nodeID[0].x * dNdeta[0][i] + element.nodeID[1].x * dNdeta[1][i] + element.nodeID[2].x * dNdeta[2][i] + element.nodeID[3].x * dNdeta[3][i];
-		jacobian[i][3] = element.nodeID[0].y * dNdeta[0][i] + element.nodeID[1].y * dNdeta[1][i] + element.nodeID[2].y * dNdeta[2][i] + element.nodeID[3].y * dNdeta[3][i];
+		jacobian[i][0] = element.nodeID[0].x * dNdksi[0][i] + element.nodeID[1].x * dNdksi[1][i] + element.nodeID[2].x *
+			dNdksi[2][i] + element.nodeID[3].x * dNdksi[3][i];
+		jacobian[i][1] = element.nodeID[0].y * dNdksi[0][i] + element.nodeID[1].y * dNdksi[1][i] + element.nodeID[2].y *
+			dNdksi[2][i] + element.nodeID[3].y * dNdksi[3][i];
+		jacobian[i][2] = element.nodeID[0].x * dNdeta[0][i] + element.nodeID[1].x * dNdeta[1][i] + element.nodeID[2].x *
+			dNdeta[2][i] + element.nodeID[3].x * dNdeta[3][i];
+		jacobian[i][3] = element.nodeID[0].y * dNdeta[0][i] + element.nodeID[1].y * dNdeta[1][i] + element.nodeID[2].y *
+			dNdeta[2][i] + element.nodeID[3].y * dNdeta[3][i];
 
 		/*
 		std::cout << jacobian[i][0] << std::endl;

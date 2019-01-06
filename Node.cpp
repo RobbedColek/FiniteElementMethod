@@ -4,7 +4,6 @@
 
 Node::Node()
 {
-
 }
 
 Node::~Node()

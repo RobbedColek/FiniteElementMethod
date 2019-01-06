@@ -1,7 +1,6 @@
 #pragma once
 class Node
 {
-
 public:
 	long double x, y;
 	Node();
@@ -9,4 +8,3 @@ public:
 
 	void printInfo();
 };
-

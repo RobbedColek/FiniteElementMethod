@@ -10,18 +10,18 @@
 class Grid
 {
 public:
-	Node * nodeList;
+	Node* nodeList;
 	Element* elementList;
 	long double H, L;
 	int nH, nL;
 	long double k, c, ro, alpha, ambientTemperature, simulationTime, simulationStepTime, initialTemperature;
-    long double **globalMatrixH;
-    long double **globalMatrixHBC;
-    long double **globalMatrixC;
-    long double *globalVectorP;
-	long double **matrixHAndVectorP;
-	long double *vectorP;
-    long double *vec;
+	long double** globalMatrixH;
+	long double** globalMatrixHBC;
+	long double** globalMatrixC;
+	long double* globalVectorP;
+	long double** matrixHAndVectorP;
+	long double* vectorP;
+	long double* vec;
 
 	Grid();
 	Grid(std::string filename);
