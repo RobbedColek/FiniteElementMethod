@@ -36,10 +36,10 @@ public:
 	void modifyIndexes(int id, MatrixC tempMatrixH);
 	void modifyIndexes(int id, MatrixH tempMatrixH);
 	void modifyIndexes(int id, VectorP tempVectorP);
+    void setValueOfMatrixHAndVectorP();
+    void calculateTemperatures();
 	void updateVectorP();
-	void calculateTemperatures();
 	bool gaussMethod(int n);
-	void setValueOfMatrixHAndVectorP();
 	void printGridInfo();
 	void printNodes();
 	void printElements();

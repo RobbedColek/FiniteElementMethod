@@ -175,14 +175,10 @@ void Grid::aggregateGrid()
 		modifyIndexes(i, tempMatrixHBC);
 
 		vec = new long double[nL * nH];
-		for (int i = 0; i < nL * nH; i++)
+		for (int j = 0; j < nL * nH; j++)
 		{
-			vec[i] = initialTemperature;
-		}
-
-		for (int i = 0; i < nL * nH; i++)
-		{
-			temp[i] = 0;
+			vec[j] = initialTemperature;
+            temp[j] = 0;
 		}
 
 		for (int i = 0; i < nL * nH; i++)
@@ -508,18 +504,18 @@ void Grid::printGridInfo()
 	std::cout << "---------------------------" << std::endl;
 	std::cout << "Printing grid details" << std::endl;
 	std::cout << "---------------------------" << std::endl;
-	std::cout << "H: " << H << std::endl;
-	std::cout << "L: " << L << std::endl;
-	std::cout << "nH: " << nH << std::endl;
-	std::cout << "nL: " << nL << std::endl;
-	std::cout << "k: " << k << std::endl;
-	std::cout << "c: " << c << std::endl;
-	std::cout << "ro: " << ro << std::endl;
-	std::cout << "alpha: " << alpha << std::endl;
-	std::cout << "ambientTemperature: " << ambientTemperature << std::endl;
-	std::cout << "simulationStepTime: " << simulationStepTime << std::endl;
-	std::cout << "initialTemperature: " << initialTemperature << std::endl;
-	std::cout << "simulationTime: " << simulationTime << std::endl;
+	std::cout << "H: " << std::setw(25) << H << std::endl;
+	std::cout << "L: " << std::setw(25) << L << std::endl;
+	std::cout << "nH: " << std::setw(24) << nH << std::endl;
+	std::cout << "nL: " << std::setw(24) << nL << std::endl;
+	std::cout << "k: " << std::setw(25) << k << std::endl;
+	std::cout << "c: " << std::setw(25) << c << std::endl;
+	std::cout << "ro: " << std::setw(24) << ro << std::endl;
+	std::cout << "alpha: " << std::setw(21) << alpha << std::endl;
+	std::cout << "ambientTemperature: " << std::setw(8) << ambientTemperature << std::endl;
+	std::cout << "simulationStepTime: " << std::setw(8) << simulationStepTime << std::endl;
+	std::cout << "initialTemperature: " << std::setw(8) << initialTemperature << std::endl;
+	std::cout << "simulationTime: " << std::setw(12) << simulationTime << std::endl;
 	std::cout << "---------------------------" << std::endl;
 }
 

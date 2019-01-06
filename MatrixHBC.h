@@ -1,11 +1,4 @@
-//
-// Created by samsung on 1/3/19.
-//
-
-#ifndef FINITEELEMENTMETHOD_MATRIXHBC_H
-#define FINITEELEMENTMETHOD_MATRIXHBC_H
-
-
+#pragma once
 #include "Element.h"
 
 class MatrixHBC
@@ -20,6 +13,3 @@ public:
 
 	void CalculateMatrixHBC(Element element);
 };
-
-
-#endif //FINITEELEMENTMETHOD_MATRIXHBC_H

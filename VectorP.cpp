@@ -1,6 +1,3 @@
-//
-// Created by samsung on 1/3/19.
-//
 #include "VectorP.h"
 #include <cmath>
 #include <iostream>

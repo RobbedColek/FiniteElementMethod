@@ -1,7 +1,3 @@
-//
-// Created by samsung on 1/3/19.
-//
-
 #include <cmath>
 #include <iostream>
 #include "MatrixHBC.h"

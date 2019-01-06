@@ -1,10 +1,4 @@
-//
-// Created by samsung on 1/3/19.
-//
-
-#ifndef FINITEELEMENTMETHOD_VECTORP_H
-#define FINITEELEMENTMETHOD_VECTORP_H
-
+#pragma once
 #include "Element.h"
 
 class VectorP
@@ -20,6 +14,3 @@ public:
 
 	void CalculateVectorP(Element element);
 };
-
-
-#endif //FINITEELEMENTMETHOD_VECTORP_H
