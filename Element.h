@@ -10,4 +10,5 @@ public:
 
 	Element();
 	~Element();
+	void printInfo();
 };

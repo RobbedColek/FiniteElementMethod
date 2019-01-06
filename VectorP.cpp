@@ -6,21 +6,6 @@
 #include <iostream>
 
 VectorP::VectorP() {
-    /*
- Macierz lokalna H dla warunkow brzegowych
- o - punkty calkowania dla powierzchni
-
-           SI = 3
-         __o_____o__
-        |           |
-        o           o
- SI = 4 |           | SI = 2
-        o           o
-        |__o_____o__|
-
-           SI = 1
-*/
-
     Px[0] = -1/sqrt(3);
     Py[0] = -1;
 
@@ -50,9 +35,9 @@ VectorP:: ~VectorP() {}
 
 void VectorP::CalculateVectorP(Element element) {
 
-    double sum1[4], sum2[4], sum3[4], sum4[4];
+    long double sum1[4], sum2[4], sum3[4], sum4[4];
 
-    double length[4], detJ[4];
+    long double length[4], detJ[4];
 
     length[0] = sqrt(pow(element.nodeID[1].x-element.nodeID[0].x, 2) + pow(element.nodeID[1].y - element.nodeID[0].y, 2));
     length[1] = sqrt(pow(element.nodeID[1].x-element.nodeID[2].x, 2) + pow(element.nodeID[1].y - element.nodeID[2].y, 2));
@@ -88,9 +73,6 @@ void VectorP::CalculateVectorP(Element element) {
     for(int i = 0; i < 4; i++)
     {
             vectorP[i] = (-1) * ((element.isSurfaceHeated[0] * sum1[i] + element.isSurfaceHeated[1] * sum2[i] + element.isSurfaceHeated[2] * sum3[i] + element.isSurfaceHeated[3] * sum4[i]) * ambientTemperature * alpha);
-
-            // std::cout << vectorP[i] << std::endl;
     }
-
 }
 

@@ -12,20 +12,25 @@ class Grid
 public:
 	Node * nodeList;
 	Element* elementList;
-	double **globalMatrixH;
-	double **globalMatrixHBC;
-	double **globalMatrixC;
-	double *globalVectorP;
-	float H, L;
+	long double H, L;
 	int nH, nL;
-	double k, c, ro, alpha, ambientTemperature, simulationTime, simulationStepTime, initialTemperature;
-	double *vec;
-	double **matrixHAndVectorP;
-	double *vectorP;
+	long double k, c, ro, alpha, ambientTemperature, simulationTime, simulationStepTime, initialTemperature;
+    long double **globalMatrixH;
+    long double **globalMatrixHBC;
+    long double **globalMatrixC;
+    long double *globalVectorP;
+	long double **matrixHAndVectorP;
+	long double *vectorP;
+    long double *vec;
 
 	Grid();
+	Grid(std::string filename);
 	~Grid();
+
 	void generateGrid(std::string filename);
+	void setNodes();
+	void setElements();
+	void setHeatedSurfaces();
 	void aggregateGrid();
 	void modifyIndexes(int id, MatrixHBC tempMatrixH);
 	void modifyIndexes(int id, MatrixC tempMatrixH);
@@ -35,4 +40,9 @@ public:
 	void calculateTemperatures();
 	bool gaussMethod(int n);
 	void setValueOfMatrixHAndVectorP();
+	void printGridInfo();
+	void printNodes();
+	void printElements();
+	void printGlobalMatrixH();
+	void printVectorP();
 };

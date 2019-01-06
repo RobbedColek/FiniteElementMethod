@@ -3,9 +3,8 @@ class Node
 {
 
 public:
-	double x, y, t;
+	long double x, y;
 	Node();
-	Node(double, double, double);
 	~Node();
 
 	void printInfo();

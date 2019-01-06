@@ -7,13 +7,12 @@
 
 #include "Element.h"
 
-
 class VectorP {
 public:
-    double alpha;
-    double Px[8], Py[8];
-    double vectorP[4];
-    double ambientTemperature;
+    long double alpha;
+    long double Px[8], Py[8];
+    long double vectorP[4];
+    long double ambientTemperature;
 
     VectorP();
     ~VectorP();

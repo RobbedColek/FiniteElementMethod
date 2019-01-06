@@ -9,7 +9,7 @@ MatrixH::~MatrixH()
 {
 }
 
-void MatrixH::calculateMatrixH(Jacobian jacobian, double k)
+void MatrixH::calculateMatrixH(Jacobian jacobian, long double k)
 {
 	for(int i = 0; i < 4; i++)
 	{
@@ -23,7 +23,6 @@ void MatrixH::calculateMatrixH(Jacobian jacobian, double k)
 		dNdy[2][i] = jacobian.inversedJacobian[2][2] * jacobian.dNdksi[i][2] + jacobian.inversedJacobian[2][3] * jacobian.dNdeta[i][2];
 		dNdy[3][i] = jacobian.inversedJacobian[3][2] * jacobian.dNdksi[i][3] + jacobian.inversedJacobian[3][3] * jacobian.dNdeta[i][3];
 	}
-	//[1][2][3] 1-nr tabeli 2-nr wiersza 3-nr kolumny
 	
 	for(int i=0;i<4;i++)
 	{
@@ -41,12 +40,12 @@ void MatrixH::calculateMatrixH(Jacobian jacobian, double k)
 			}
 		}
 	}
+
 	for (int i = 0; i<4; i++)
 	{
 		for (int j = 0; j<4; j++)
 		{
 			H[j][i] = sum[0][j][i] + sum[1][j][i] + sum[2][j][i] + sum[3][j][i];
-			// std::cout << H[j][i] << std::endl;
 		}
 	}
 }

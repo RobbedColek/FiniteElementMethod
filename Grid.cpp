@@ -8,11 +8,15 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <iomanip>
 
 Grid::Grid()
 {
 }
 
+Grid::Grid(std::string filename) {
+    this->generateGrid(filename);
+}
 
 Grid::~Grid()
 {
@@ -21,12 +25,6 @@ Grid::~Grid()
 void Grid::generateGrid(std::string filename)
 {
     freopen(filename.c_str(), "r", stdin);
-
-    // k - conductivity (przewodnosc)
-    // c - cieplo wlasciwe
-    // ro - gestosc
-    // alpha - convection (konwekcja)
-    // ambientTemperature - temp otoczenia
 
     std::cin >> H;
     std::cin >> L;
@@ -41,22 +39,19 @@ void Grid::generateGrid(std::string filename)
     std::cin >> initialTemperature;
     std::cin >> simulationTime;
 
-    std::cout << "H: " << H << std::endl;
-    std::cout << "L: " << L << std::endl;
-    std::cout << "nH: " << nH << std::endl;
-    std::cout << "nL: " << nL << std::endl;
-    std::cout << "k: " << k << std::endl;
-    std::cout << "c: " << c << std::endl;
-    std::cout << "ro: " << ro << std::endl;
-    std::cout << "alpha: " << alpha << std::endl;
-    std::cout << "ambientTemperature: " << ambientTemperature << std::endl;
-    std::cout << "simulationStepTime: " << simulationStepTime << std::endl;
-    std::cout << "initialTemperature: " << initialTemperature << std::endl;
-    std::cout << "simulationTime: " << simulationTime << std::endl;
+    vectorP = new long double[nH];
 
-    // nL - liczba w?z??w na d?ugo??
-    // nH - liczba w?z??w na wysoko??
+    this->setNodes();
 
+    this->setElements();
+
+    this->setHeatedSurfaces();
+
+    fclose(stdin);
+}
+
+
+void Grid::setNodes() {
     nodeList = new Node[nH*nL];
 
     for (int j = 0; j < nL; j++)
@@ -67,13 +62,10 @@ void Grid::generateGrid(std::string filename)
             nodeList[i + (j*nH)].x = j * (L / (nL - 1));
         }
     }
+}
 
-    /*for (int i = 0; i < nH*nL; i++)
-    {
-        std::cout << "ID: " << i << std::endl;
-        nodeList[i].printInfo();
-    }*/
 
+void Grid::setElements() {
     elementList = new Element[(nH - 1)*(nL - 1)];
 
     for (int j = 0; j < (nL - 1); j++)
@@ -91,7 +83,9 @@ void Grid::generateGrid(std::string filename)
             elementList[i + (j*(nH - 1))].ID[3] = (i + (j*nH) + 1);
         }
     }
+}
 
+void Grid::setHeatedSurfaces() {
     // warunki brzegowe
     for(int i = 0; i < nH-1; i++)
     {
@@ -112,45 +106,30 @@ void Grid::generateGrid(std::string filename)
     {
         elementList[i*(nH-1)+(nH-2)].isSurfaceHeated[2] = true;
     }
-
-    /*
-    for (int i = 0; i < (nH - 1)*(nL - 1); i++)
-    {
-        std::cout << "ID: " << i << std::endl;
-        std::cout << elementList[i].isSurfaceHeated[0] << std::endl;
-        std::cout << elementList[i].isSurfaceHeated[1] << std::endl;
-        std::cout << elementList[i].isSurfaceHeated[2] << std::endl;
-        std::cout << elementList[i].isSurfaceHeated[3] << std::endl;
-    }
-    */
-
-    fclose(stdin);
-
-
 }
 
 void Grid::aggregateGrid() {
     double temp[nL*nH];
 
-    matrixHAndVectorP = new double*[nL*nH];
+    matrixHAndVectorP = new long double*[nL*nH];
     for(int i = 0; i < nL*nH; ++i)
-        matrixHAndVectorP[i] = new double[nL*nH];
+        matrixHAndVectorP[i] = new long double[nL*nH];
 
-    globalMatrixH = new double*[nL*nH];
+    globalMatrixH = new long double*[nL*nH];
     for(int i = 0; i < nL*nH; ++i)
-        globalMatrixH[i] = new double[nL*nH];
+        globalMatrixH[i] = new long double[nL*nH];
 
 
-    globalMatrixHBC = new double*[nL*nH];
+    globalMatrixHBC = new long double*[nL*nH];
     for(int i = 0; i < nL*nH; ++i)
-        globalMatrixHBC[i] = new double[nL*nH];
+        globalMatrixHBC[i] = new long double[nL*nH];
 
 
-    globalMatrixC = new double*[nL*nH];
+    globalMatrixC = new long double*[nL*nH];
     for(int i = 0; i < nL*nH; ++i)
-        globalMatrixC[i] = new double[nL*nH];
+        globalMatrixC[i] = new long double[nL*nH];
 
-    globalVectorP = new double[nL*nH];
+    globalVectorP = new long double[nL*nH];
 
 
     for(int i = 0; i < nL*nH; i++)
@@ -174,27 +153,22 @@ void Grid::aggregateGrid() {
 
         MatrixH tempMatrixH;
 
-
         tempMatrixH.calculateMatrixH(tempJacobian, k);
-
         modifyIndexes(i, tempMatrixH);
-
 
         MatrixC tempMatrixC;
 
         tempMatrixC.calculateMatrixC(tempJacobian, c, ro);
-
         modifyIndexes(i, tempMatrixC);
 
         MatrixHBC tempMatrixHBC;
 
         tempMatrixHBC.alpha = alpha;
-
         tempMatrixHBC.CalculateMatrixHBC(elementList[i]);
 
         modifyIndexes(i, tempMatrixHBC);
 
-        vec = new double[nL*nH];
+        vec = new long double[nL*nH];
         for(int i=0; i<nL*nH; i++)
         {
             vec[i]=initialTemperature;
@@ -221,15 +195,10 @@ void Grid::aggregateGrid() {
 
     }
     for (int j = 0; j < nL*nH; j++) {
-
         vectorP[j] = globalVectorP[j];
         globalVectorP[j] = -globalVectorP[j] + temp[j];
-        std::cout << globalVectorP[j] << std::endl;
         for (int k = 0; k < nL*nH; k++) {
-
             globalMatrixH[j][k] += globalMatrixHBC[j][k]+ (globalMatrixC[j][k]/simulationStepTime);
-            // std::cout << globalMatrixH[j][k] << std::endl;
-
         }
     }
 }
@@ -439,18 +408,17 @@ void Grid::setValueOfMatrixHAndVectorP() {
                 matrixHAndVectorP[i][j] = globalVectorP[i];
                 continue;
             }
-
             matrixHAndVectorP[i][j] = globalMatrixH[i][j];
         }
     }
-
 }
 
 void Grid::calculateTemperatures() {
-    int n = static_cast<int>(nH * nL);
-    double max = std::numeric_limits<double>::min();
-    double min = std::numeric_limits<double>::max();
-    for (int j = 0; j < simulationTime; j = j + simulationStepTime) {
+    int n = (nH * nL);
+    long double max = std::numeric_limits<long double>::min();
+    long double min = std::numeric_limits<long double>::max();
+    std::cout << "Time[s]" << std::setw(20) << "MinTemp" << std::setw(20) << "MaxTemp" << std::endl;
+    for (int j = 0; j < simulationTime; j = static_cast<int>(j + simulationStepTime)) {
 
         setValueOfMatrixHAndVectorP();
         gaussMethod(n);
@@ -462,13 +430,14 @@ void Grid::calculateTemperatures() {
                 min = vec[i];
         }
 
-        std::cout << j+simulationStepTime <<"s"<<" "<< "minTemp " << std::fixed << min << " " << "maxTemp " << " " << max << std::endl;
+        std::cout.setf( std::ios::fixed );
+        std::cout << static_cast<int>(j+simulationStepTime) << std::setw(29) << min << std::setw(20) << max << std::endl;
         updateVectorP();
     }
 }
 
 void Grid::updateVectorP() {
-    double val1 = 0;
+    long double val1 = 0;
 
     for (int j = 0; j < (nL * nH); ++j) {
         globalVectorP[j] = 0;
@@ -480,10 +449,12 @@ void Grid::updateVectorP() {
     }
 }
 
+// Gauss Method sourced from - https://eduinf.waw.pl/inf/alg/001_search/0076.php
+
 bool Grid::gaussMethod(int n) {
-    const double eps = 1e-12;
+    const long double eps = 1e-12;
     int i, j, k;
-    double m, s;
+    long double m, s;
     for(int i = 0; i < (nL*nH); i++)
     {
         vec[i] = 0;
@@ -506,4 +477,74 @@ bool Grid::gaussMethod(int n) {
         vec[i] = s / matrixHAndVectorP[i][i];
     }
     return true;
+}
+
+void Grid::printGridInfo() {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Printing grid details" << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "H: " << H << std::endl;
+    std::cout << "L: " << L << std::endl;
+    std::cout << "nH: " << nH << std::endl;
+    std::cout << "nL: " << nL << std::endl;
+    std::cout << "k: " << k << std::endl;
+    std::cout << "c: " << c << std::endl;
+    std::cout << "ro: " << ro << std::endl;
+    std::cout << "alpha: " << alpha << std::endl;
+    std::cout << "ambientTemperature: " << ambientTemperature << std::endl;
+    std::cout << "simulationStepTime: " << simulationStepTime << std::endl;
+    std::cout << "initialTemperature: " << initialTemperature << std::endl;
+    std::cout << "simulationTime: " << simulationTime << std::endl;
+    std::cout << "---------------------------" << std::endl;
+}
+
+void Grid::printNodes() {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Printing all nodes details" << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    for (int i = 0; i < nH*nL; i++)
+    {
+        std::cout << "ID: " << i << std::endl;
+        nodeList[i].printInfo();
+    }
+    std::cout << "---------------------------" << std::endl;
+}
+
+void Grid::printElements() {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Printing all elements details" << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    for (int j = 0; j < (nL - 1); j++)
+    {
+        for (int i = 0; i < (nH - 1); i++)
+        {
+            elementList[i + (j*(nH - 1))].printInfo();
+            elementList[i + (j*(nH - 1))].printInfo();
+            elementList[i + (j*(nH - 1))].printInfo();
+            elementList[i + (j*(nH - 1))].printInfo();
+        }
+    }
+    std::cout << "---------------------------" << std::endl;
+}
+
+void Grid::printGlobalMatrixH() {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Printing Global Matrix H" << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    for (int j = 0; j < nL*nH; j++) {
+        for (int k = 0; k < nL*nH; k++) {
+            std::cout << globalMatrixH[j][k] << std::endl;
+        }
+    }
+    std::cout << "---------------------------" << std::endl;
+}
+
+void Grid::printVectorP() {
+    std::cout << "---------------------------" << std::endl;
+    std::cout << "Printing Global Vector P" << std::endl;
+    std::cout << "---------------------------" << std::endl;
+    for (int i = 0; i < nL*nH; i++) {
+        std::cout << globalVectorP[i] << std::endl;
+    }
+    std::cout << "---------------------------" << std::endl;
 }

@@ -10,9 +10,9 @@
 
 class MatrixHBC {
 public:
-    double alpha;
-    double Px[8], Py[8];
-    double matrixH[4][4];
+    long double alpha;
+    long double Px[8], Py[8];
+    long double matrixH[4][4];
 
     MatrixHBC();
     ~MatrixHBC();
