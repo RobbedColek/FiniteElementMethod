@@ -428,11 +428,11 @@ void Grid::setValueOfMatrixHAndVectorP()
 void Grid::calculateTemperatures()
 {
 	int n = (nH * nL);
-	long double max = std::numeric_limits<long double>::min();
-	long double min = std::numeric_limits<long double>::max();
 	std::cout << "Time[s]" << std::setw(20) << "MinTemp" << std::setw(20) << "MaxTemp" << std::endl;
 	for (int j = 0; j < simulationTime; j = static_cast<int>(j + simulationStepTime))
 	{
+        long double max = std::numeric_limits<long double>::min();
+        long double min = std::numeric_limits<long double>::max();
 		setValueOfMatrixHAndVectorP();
 		gaussMethod(n);
 		for (int i = 0; i < (nL * nH); i++)
